@@ -14,12 +14,14 @@ def unique_houses(filename):
     """
 
     my_file = open(filename)
-    records = []
+    houses = set()
 
     for line in my_file:
-        records = records + [line.split('|')]
+        record = line.split('|')
+        if record[2]:
+            houses.add(record[2])
 
-    return {record[2] for record in records if record[2] != ''}
+    return houses
 
 unique_houses('cohort_data.txt')
 
