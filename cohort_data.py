@@ -23,7 +23,6 @@ def unique_houses(filename):
 
     return houses
 
-unique_houses('cohort_data.txt')
 
 def sort_by_cohort(filename):
     """TODO: Return a list of all cohort lists, including ghosts but not instructors.
@@ -38,8 +37,6 @@ def sort_by_cohort(filename):
     >>> sort_by_cohort("cohort_data.txt")
     [['Harry Potter', 'Mandy Brocklehurst', 'Ron Weasley', 'Oliver Wood', 'Colin Creevey', 'Cho Chang', 'Michael Corner', 'Draco Malfoy', 'Seamus Finnigan', 'Eddie Carmichael', 'Theodore Nott', 'Terence Higgs', 'Hermione Granger', 'Penelope Clearwater', 'Angelina Johnson', 'Dennis Creevey'], ['Neville Longbottom', 'Cedric Diggory', 'Pansy Parkinson', 'Anthony Goldstein', 'Padma Patil', 'Luna Lovegood', 'Eleanor Branstone', 'Lee Jordan', 'Marietta Edgecombe', 'Andrew Kirke', 'Ginny Weasley', 'Mary Macdonald', 'Blaise Zabini', 'Natalie McDonald', 'Adrian Pucey', 'Hannah Abbott', 'Graham Pritchard', 'Susan Bones', 'Roger Davies', 'Owen Cauldwell'], ['Laura Madley', 'Orla Quirke', 'Parvati Patil', 'Eloise Midgeon', 'Zacharias Smith', 'Cormac McLaggen', 'Lisa Turpin', 'Demelza Robins', 'Ernie Macmillan', 'Millicent Bullstrode', 'Percy Weasley', 'Jimmy Peakes', 'Justin Finch-Fletchley', 'Miles Bletchley', 'Malcolm Baddock'], ['Marcus Belby', 'Euan Abercrombie', 'Vincent Crabbe', 'Ritchie Coote', 'Katie Bell', 'Terry Boot', 'Lavender Brown', 'Gregory Goyle', 'Marcus Flint', 'Dean Thomas', 'Jack Sloper', 'Rose Zeller', 'Stewart Ackerley', 'Fred Weasley', 'George Weasley', 'Romilda Vane', 'Alicia Spinnet', 'Kevin Whitby'], ['Friendly Friar', 'Grey Lady', 'Nearly Headless Nick', 'Bloody Baron']]
     """
-    my_file = open(filename)
-
     all_students = []
     winter_16 = []
     spring_16 = []
@@ -47,26 +44,25 @@ def sort_by_cohort(filename):
     fall_15 = []
     ghosts = []
 
-    # Code goes here
-    for line in my_file:
-        record = line.split('|')
-        name = record[0] + ' ' + record[1]
-        cohort = record[4]
-        if cohort == 'Winter 2016\n':
-            winter_16.append(name)
-        if cohort == 'Spring 2016\n':
-            spring_16.append(name)
-        if cohort == 'Summer 2016\n':
-            summer_16.append(name)
-        if cohort == 'Fall 2015\n':
-            fall_15.append(name)
-        if cohort == 'G\n':
-            ghosts.append(name)
+    with open(filename) as my_file:
+        for line in my_file:
+            record = line.rstrip().split('|')
+            name = record[0] + ' ' + record[1]
+            cohort = record[4]
+            if cohort == 'Winter 2016':
+                winter_16.append(name)
+            if cohort == 'Spring 2016':
+                spring_16.append(name)
+            if cohort == 'Summer 2016':
+                summer_16.append(name)
+            if cohort == 'Fall 2015':
+                fall_15.append(name)
+            if cohort == 'G':
+                ghosts.append(name)
 
     all_students.extend([fall_15, winter_16, spring_16, summer_16, ghosts])
     return all_students
 
-#sort_by_cohort('cohort_data.txt')
 
 # def hogwarts_by_house(filename):
 #     """TODO: Sort students into lists by house and return all lists in one list.
