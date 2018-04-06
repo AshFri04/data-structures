@@ -136,6 +136,7 @@ def all_students_tuple_list(filename):
             first_name, last_name, house, advisor, cohort = record
             name = first_name + ' ' + last_name
             if house:
+
                 record = (name, house, advisor, cohort)
                 student_list.append(record)
     return student_list
@@ -163,39 +164,45 @@ def find_cohort_by_student_name(student_list):
 
     student_name = raw_input('Who are you looking for? ')
 
-    for student in student_list:      
+    for student in student_list:
         if student_name == student[0]:
             return '{} was in the {} cohort.'.format(student_name, student[3])
-    
-    return "Student not found."
-    
 
-our_list = all_students_tuple_list('cohort_data.txt')
-test = find_cohort_by_student_name(our_list)
-print test
+    return "Student not found."
 
 # ##########################################################################################
 # # Further Study Questions
 
 
-# def find_name_duplicates(filename):
-#     """TODO: Return a set of student last names that have duplicates.
+def find_name_duplicates(filename):
+    """TODO: Return a set of student last names that have duplicates.
 
-#     Iterate over the data to find any last names that exist across all cohorts.
-#     Use set operations (set math) to create and return a set of these names.
+    Iterate over the data to find any last names that exist across all cohorts.
+    Use set operations (set math) to create and return a set of these names.
 
-#     For example:
-#     >>> find_name_duplicates("cohort_data.txt")
-#     set(['Weasley'])
+    For example:
+    >>> find_name_duplicates("cohort_data.txt")
+    set(['Weasley'])
 
-#     """
+    """
 
-#     duplicate_names = set()
+    duplicate_names = set()
+    student_list = []
 
-#     # Code goes here
+    with open(filename) as my_file:
+        for line in my_file:
+            record = line.rstrip().split('|')
+            first_name, last_name, house, advisor, cohort = record
+            if house:
+                student_list.append(last_name)
 
-#     return duplicate_names
+    for index in range(len(student_list)-1):
+        name = student_list[index]
+        if (name in student_list[:index]) or (name in student_list[index+1:]):
+            duplicate_names.add(name)
 
+    return duplicate_names
+find_name_duplicates('cohort_data.txt')
 
 # def find_house_members_by_student_name(student_list):
 #     """TODO: Prompt user for a student. Display everyone in their house and cohort.
