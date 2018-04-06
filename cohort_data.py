@@ -133,12 +133,10 @@ def all_students_tuple_list(filename):
     with open(filename) as my_file:
         for line in my_file:
             record = line.rstrip().split('|')
-            name = record[0] + ' ' + record[1]
-            house = record[2]
-            advisor = record[3]
-            cohort = record[4]
+            first_name, last_name, house, advisor, cohort = record
+            name = first_name + ' ' + last_name
             if house:
-                record = tuple([name, house, advisor, cohort])
+                record = (name, house, advisor, cohort)
                 student_list.append(record)
     return student_list
 #all_students_tuple_list('cohort_data.txt')
@@ -165,17 +163,16 @@ def find_cohort_by_student_name(student_list):
 
     student_name = raw_input('Who are you looking for? ')
 
-    for student in student_list:
-        
+    for student in student_list:      
         if student_name == student[0]:
-            print '{} was in the {} cohort.'.format(student_name, student[3])
-            break
-        else:
-            print "Student not found."
-            break
+            return '{} was in the {} cohort.'.format(student_name, student[3])
+    
+    return "Student not found."
+    
 
 our_list = all_students_tuple_list('cohort_data.txt')
-find_cohort_by_student_name(our_list)
+test = find_cohort_by_student_name(our_list)
+print test
 
 # ##########################################################################################
 # # Further Study Questions
